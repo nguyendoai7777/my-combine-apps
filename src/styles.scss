@@ -1,1 +1,75 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'assets/styles/bootstrap.min.css';
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+a {
+  color: unset;
+}
+
+@keyframes boxBorderAnimation {
+  0% {
+    background-position: 0 0, -20px 0, 100% -20px, 0 100%;
+  }
+  100% {
+    background-position: 0 -20px, 0 0, 100% 0, -20px 100%;
+  }
+}
+
+:root {
+  --clr-border: #adadad;
+  --AnimationLength: 0px;
+}
+
+.img-select-zone {
+  display: flex;
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+  overflow: hidden;
+  border: 1px solid rgba(63, 81, 181, 0.3);
+}
+
+.trash-zone-overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0.3;
+  border-color: #ff1493;
+  border-style: solid;
+  pointer-events: none;
+}
+
+.select-zone {
+  position: absolute;
+  border: 1px solid rgba(0, 132, 255, 0.753);
+  background-color: rgba(0, 132, 255, 0.2);
+  pointer-events: none;
+  background-position: 0 0, 0 0, 100% 0, 0 100%;
+  background-size: 3px 100%, 100% 3px, 3px 100%, 100% 3px;
+  background-repeat: no-repeat;
+}
+
+.select-zone.selected {
+  border: none;
+  background-color: transparent;
+  background-image: repeating-linear-gradient(0deg, var(--clr-border), var(--clr-border) 10px, transparent 10px, transparent 20px),
+    repeating-linear-gradient(90deg, var(--clr-border), var(--clr-border) 10px, transparent 10px, transparent 20px),
+    repeating-linear-gradient(180deg, var(--clr-border), var(--clr-border) 10px, transparent 10px, transparent 20px),
+    repeating-linear-gradient(270deg, var(--clr-border), var(--clr-border) 10px, transparent 10px, transparent 20px);
+  background-size: 1px calc(100% + 20px), calc(100% + 20px) 1px, 1px calc(100% + 20px), calc(100% + 20px) 1px;
+  -webkit-animation: boxBorderAnimation 1s infinite linear;
+  animation: boxBorderAnimation 1s infinite linear;
+}
+
+button {
+  &:focus {
+  }
+}

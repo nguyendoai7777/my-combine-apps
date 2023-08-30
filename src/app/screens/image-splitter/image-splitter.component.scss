@@ -1,0 +1,29 @@
+.box-actions {
+  --radius: 8px;
+  .c-btn {
+    background-color: #3f51b5;
+    color: #fff;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+  }
+  .choose-btn {
+    padding: 16px 40px;
+    border-top-left-radius: var(--radius);
+    border-bottom-left-radius: var(--radius);
+    position: relative;
+    input.file-input {
+      opacity: 0;
+      position: absolute;
+      inset: 0;
+    }
+  }
+  .opt-btn {
+    padding: 0 20px;
+    border-top-right-radius: var(--radius);
+    border-bottom-right-radius: var(--radius);
+  }
+  .rotate-90 {
+    transform: rotate(90deg);
+  }
+}
