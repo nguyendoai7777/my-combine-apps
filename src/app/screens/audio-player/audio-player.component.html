@@ -1,0 +1,43 @@
+<mat-drawer-container class="side-container" [hasBackdrop]="false">
+  <mat-drawer class="side-zone" style="width: 50%" #drawer [mode]="'over'">
+    <mat-toolbar color="primary" class="position-sticky top-0" style="z-index: 8; box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f">
+      <span style="padding-left: 8px">Add an audio</span>
+      <span class="rest-spacer"></span>
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" (click)="drawer.close()">
+        <mat-icon>arrow_back_ios_new</mat-icon>
+      </button>
+    </mat-toolbar>
+    <div class="body-drawer scrollbar-apls">
+      <add-song></add-song>
+      <song-list></song-list>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content class="side-content">
+    <mat-toolbar color="primary" style="box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f">
+      <button mat-mini-fab color="primary" (click)="drawer.toggle()" aria-label="Show Side Nav">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="rest-spacer"></span>
+    </mat-toolbar>
+    <div class="main-body flex">
+      <div class="w_25bm">
+        <div class="px-4 pt-4 flex flex-column align-center">
+          <ng-template #noAvatar> img </ng-template>
+          <img
+            class="aus-avatar"
+            [ngClass]="{
+              'w-100 playing-disk': (service.currentSongPlaying?.avatar || '').length <= 0,
+              'paused-disk': !service.state(),
+            }"
+            [src]="(service.currentSongPlaying?.avatar || '').length > 0 ? service.currentSongPlaying?.avatar : 'assets/images/not-avatar.png'"
+            alt=""
+          />
+        </div>
+      </div>
+      <div class="w_rest">
+        <main-list />
+      </div>
+    </div>
+    <media-controller />
+  </mat-drawer-content>
+</mat-drawer-container>

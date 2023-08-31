@@ -1,0 +1,36 @@
+<div class="px-2" [class.pt-4]="mode === 'new'">
+  <form #addForm="ngForm" [formGroup]="form" (ngSubmit)="addAnSubject(addForm)" (keyup.enter)="addAnSubject(addForm)">
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" />
+      <mat-error *ngIf="form.get('name')?.hasError('required')">Cannot be left blank</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100 mt-1">
+      <mat-label>URL</mat-label>
+      <input matInput formControlName="url" />
+      <mat-error *ngIf="form.get('url')?.hasError('required')">Cannot be left blank</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100 mt-1">
+      <mat-label>Avatar URL</mat-label>
+      <input matInput formControlName="avatar" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100 mt-1 area-flow">
+      <mat-label>Lyrics</mat-label>
+      <textarea rows="6" matInput formControlName="lyrics"></textarea>
+    </mat-form-field>
+
+    <div class="flex w-100 content-between" *ngIf="!remote">
+      <input #formCpn style="opacity: 0" />
+      <button class="mb-3" *ngIf="mode === 'new'; else update" mat-raised-button [color]="submitted() && form.invalid ? 'warn' : 'primary'">add</button>
+      <ng-template #update>
+        <!--<button
+          mat-stroked-button
+          [color]="form.invalid ? 'warn' : 'primary'"
+          [class.invalid-f]="form.invalid"
+        >
+          <mat-icon class="reset-style-icon">done</mat-icon>
+        </button>-->
+      </ng-template>
+    </div>
+  </form>
+</div>

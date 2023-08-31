@@ -8,12 +8,19 @@
     "strictPropertyInitialization": false,
     "paths": {
       "@scr/*": ["src/app/screens/*"],
-      "@cpn/*": ["src/app/components/*"]
+      "@cpn/*": ["src/app/components/*"],
+      "@app-types/*": ["src/app/common/types/*"],
+      "@directives/*": ["src/app/common/directives/*"],
+      "@services/*": ["src/app/common/services/*"],
+      "@validators/*": ["src/app/common/validators/*"],
+      "@shared/*": ["src/app/common/shared/*"],
+      "@pipes/*": ["src/app/common/pipes/*"]
     },
     "strict": true,
-    "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
+    "noImplicitOverride": true,
+    "noImplicitAny": false,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,

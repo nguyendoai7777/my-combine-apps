@@ -1,0 +1,137 @@
+:host {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  border-top: 1px solid #e1e1e1;
+  background-color: #fff;
+  .media-controller {
+  }
+}
+
+.main-control-icon {
+  width: 25px;
+  height: 25px;
+  fill: black;
+}
+
+.main-control-button {
+  min-width: 50px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+}
+
+.np-action {
+  padding: 3px 0 0 0;
+  .mat-icon {
+    height: 40px;
+    width: 40px;
+    font-size: 40px;
+  }
+}
+
+.destination {
+  position: absolute;
+  top: calc(100% - 1rem);
+  right: 1rem;
+  height: 1rem;
+  background: #fff;
+  overflow-x: hidden;
+  z-index: 999;
+  width: calc(100% / 3 - 2rem - 16px);
+  background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 14%, rgba(255, 255, 255, 0) 100%);
+}
+
+.sname {
+  width: calc(100% - 52px);
+}
+
+.mpt {
+  padding-top: 12px;
+  font-weight: bolder;
+  font-size: 16px;
+}
+
+.divider-left {
+  border-left: 1px solid #e1e1e1;
+}
+
+.divider-right {
+  height: 100%;
+  border-right: 1px solid #e1e1e1;
+}
+
+.invalid-audio {
+  position: relative;
+  opacity: 0.5;
+  &:after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 9;
+  }
+}
+
+.custom-icon-button {
+  width: 48px !important;
+  min-width: 48px !important;
+  height: 48px !important;
+  border-radius: 50%;
+}
+
+.ico-loop {
+  width: 20px;
+  height: 20px;
+  fill: #3f51b5;
+}
+
+.icon-normal {
+  fill: var(--icon-normal-color);
+}
+
+.icon-primary {
+  fill: var(--mat-primary-color);
+}
+
+.icon-accent {
+  fill: var(--mat-accent-color);
+}
+
+.icon-warn {
+  fill: var(--mat-warn-color);
+}
+
+.btn-active-primary:after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--mat-primary-color);
+  opacity: 0.1;
+  border-radius: 50%;
+}
+
+.auto-play {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.alarm-off {
+  position: absolute;
+  top: 50%;
+  left: calc(-1.5rem + 12px);
+  transform: translateY(-50%);
+}
+
+.time-left {
+  font-weight: bold;
+  font-size: 12px;
+  color: var(--mat-primary-color);
+}

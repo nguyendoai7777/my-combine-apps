@@ -1,0 +1,37 @@
+<div class="sidenav-song s-effect w-100" *ngFor="let s of list" (dblclick)="mediaService.playByRemote(s)">
+  <div class="text-input">{{ s.name }}</div>
+  <div class="actions">
+    <button mat-icon-button (click)="selected(s); onEdit()">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button (click)="selected(s); openDialog()">
+      <mat-icon>delete_forever</mat-icon>
+    </button>
+  </div>
+</div>
+
+<ng-template #dialogRef>
+  <h1 mat-dialog-title>Delete this</h1>
+  <div mat-dialog-content>
+    Would you like to delete <b>{{ currentSongSelected?.name }}</b>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+    <button mat-stroked-button mat-dialog-close cdkFocusInitial color="primary" (click)="onDelete()">Sure</button>
+  </div>
+</ng-template>
+
+<ng-template #snackbarRef>
+  <div class="flex">
+    <span matSnackBarLabel>Cannot be left blank</span>
+    <span matSnackBarActions>
+      <button mat-icon-button matSnackBarAction>
+        <mat-icon style="color: #fff">close</mat-icon>
+      </button>
+    </span>
+  </div>
+</ng-template>
+
+<ng-template #editDialogRef>
+  <edit-dialog [current]="currentSongSelected"></edit-dialog>
+</ng-template>

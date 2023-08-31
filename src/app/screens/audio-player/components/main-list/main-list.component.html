@@ -1,0 +1,15 @@
+<div class="w_rest">
+  <ng-container *ngFor="let s of list; last as l">
+    <div (click)="mediaService.playByRemote(s)" class="spl_3 flex content-between align-end" [class.playing]="mediaService.currentSongPlaying?.id === s.id">
+      <span style="padding: 2px 0">{{ s.name }}</span>
+      <mat-icon *ngIf="mediaService.currentSongPlaying?.id === s.id && mediaService.state()">equalizer</mat-icon>
+      <svg class="will-play" *ngIf="!(mediaService.currentSongPlaying?.id === s.id && mediaService.state())">
+        <use xlink:href="#pause" />
+      </svg>
+    </div>
+    <div class="divider" *ngIf="!l"></div>
+  </ng-container>
+</div>
+<div class="l_extend position-sticky top-0 scrollbar-apls ms-3 pt-2">
+  <div class="lyrics-box pt-3 pb-4" [innerHTML]="mediaService.currentSongPlaying?.lyrics ?? '' | lyric"></div>
+</div>

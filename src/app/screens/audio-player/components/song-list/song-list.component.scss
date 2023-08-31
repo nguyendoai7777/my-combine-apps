@@ -1,0 +1,55 @@
+:host {
+  padding: 0 8px 24px 24px;
+  display: block;
+  .sidenav-song {
+    padding: 12px;
+    border-radius: 8px;
+    transition: var(--transition-song-effect);
+    &:hover {
+      box-shadow: 0 6px 13px -7px #878787;
+    }
+  }
+  &::-webkit-scrollbar {
+    background: transparent;
+    width: 16px;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 56px;
+    border-radius: 8px;
+    border: 4px solid transparent;
+    background-clip: content-box;
+    background-color: transparent;
+  }
+  &:hover::-webkit-scrollbar-thumb {
+    background-color: #9d9d9d;
+  }
+  .text-input {
+    font-size: 18px;
+    padding: 5px;
+  }
+  .in-edit {
+    box-shadow: 0 6px 13px -7px #878787;
+    background-color: #efefef;
+    .actions {
+      opacity: 1;
+    }
+  }
+}
+
+.s-effect {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: var(--transition-song-effect);
+  &:hover {
+    background-color: #efefef;
+    .actions {
+      opacity: 1;
+    }
+  }
+  .actions {
+    opacity: 0;
+    transition: var(--transition-song-effect);
+    display: flex;
+  }
+}

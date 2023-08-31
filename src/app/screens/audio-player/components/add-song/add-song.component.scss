@@ -1,0 +1,14 @@
+.valid-f {
+  border-color: #3f51b5;
+}
+
+.srs {
+  height: calc(100% - 58px - 36px);
+  overflow: hidden auto;
+}
+
+::ng-deep .area-flow {
+  .mat-mdc-text-field-wrapper {
+    padding-right: 0 !important;
+  }
+}

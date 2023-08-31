@@ -1,0 +1,145 @@
+<audio #audioRef style="display: none"></audio>
+
+<div class="media-controller">
+  <div class="flex">
+    <div class="w-25">
+      <div class="mx-4 divider-right">
+        <div class="flex mt-2">
+          <div class="sname">
+            <div class="mpt text-ellipsis">
+              {{ currentSongSelected?.name }}
+            </div>
+          </div>
+          <div class="flex flex-column">
+            <button mat-icon-button (click)="mode = 'update'; mediaService.openDialogEdit(editDialogRef)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="mode = 'new'; mediaService.openDialogEdit(editDialogRef)">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w-50 mpt" [class.invalid-audio]="!mediaService.currentSongPlaying">
+      <div class="w-100 content-center flex align-center position-relative">
+        <div class="alarm-off flex align-center">
+          <button mat-icon-button (click)="showAlarm()" [color]="mediaService.onTimeout() ? 'primary' : ''">
+            <mat-icon>{{ mediaService.onTimeout() ? 'alarm_on' : 'alarm' }}</mat-icon>
+          </button>
+          <span *ngIf="mediaService.onTimeout()" class="time-left">{{ countdownView() | durationConverter }}</span>
+        </div>
+
+        <button mat-button class="me-3 custom-icon-button" (click)="mediaService.toggleShuffle()">
+          <svg class="ico-loop {{ mediaService.shuffle() ? 'icon-primary' : 'icon-normal' }}">
+            <use xlink:href="#shuffle" />
+          </svg>
+        </button>
+        <button mat-icon-button class="np-action me-3" (click)="mediaService.previous()">
+          <mat-icon>skip_previous</mat-icon>
+        </button>
+        <button mat-button class="main-control-button" (click)="mediaService.playOrPause()">
+          <svg class="main-control-icon" [style.transform]="'translateX({{mediaService.state() ? 2 : 0}}px)'">
+            <use [attr.xlink:href]="mediaService.state() ? '#play' : '#pause'" />
+          </svg>
+        </button>
+        <button mat-icon-button class="np-action ms-3" (click)="mediaService.next()">
+          <mat-icon>skip_next</mat-icon>
+        </button>
+        <button mat-button class="ms-3 custom-icon-button" [class.btn-active-primary]="!(mediaService.loop() === 0)" (click)="mediaService.setLoop()">
+          <svg class="ico-loop {{ mediaService.loop() === 0 ? 'icon-normal' : 'icon-primary' }}">
+            <use [attr.xlink:href]="mediaService.loop() === 1 ? '#loop1' : '#loop'" />
+          </svg>
+        </button>
+
+        <div class="auto-play">
+          <mat-slide-toggle [formControl]="autoPlay" color="primary" (toggleChange)="mediaService.setAutoPlay()"> &nbsp; Auto play </mat-slide-toggle>
+        </div>
+      </div>
+      <div class="w-100 flex align-center">
+        <div class="time me-3">{{ mediaService.currentTime | durationConverter }}</div>
+        <mat-slider class="flex-1" min="0" [max]="mediaService.duration" value="0" (input)="mediaService.onTimeChange($event)">
+          <input matSliderThumb [(ngModel)]="mediaService.currentTime" />
+        </mat-slider>
+        <div class="time ms-3">{{ mediaService.duration | durationConverter }}</div>
+      </div>
+    </div>
+    <div class="w-25">
+      <div class="mx-4 divider-left position-relative mpt" [class.invalid-audio]="!mediaService.currentSongPlaying">
+        <div class="destination"></div>
+        <div class="w-75 ms-auto flex align-center">
+          <mat-icon class="me-3 ic-size-xl" (click)="mediaService.toggleVolume()">{{
+            mediaService.volume === 0 ? 'volume_off' : mediaService.volume <= mediaService.volumeMax / 3 ? 'volume_down' : 'volume_up'
+          }}</mat-icon>
+          <mat-slider style="width: calc(100% / 6 * 5)" min="0" [max]="mediaService.volumeMax" step="0.1" (input)="mediaService.onVolumeChange($event)">
+            <input matSliderThumb [(ngModel)]="mediaService.volume" />
+          </mat-slider>
+        </div>
+
+        <div class="flex">
+          <div class="w-25 flex content-center">
+            <button mat-icon-button matTooltip="Reset Stereo Panner" (click)="mediaService.resetPan()" class="ms-4">
+              <mat-icon>cached</mat-icon>
+            </button>
+          </div>
+          <div class="w-75 ms-auto flex align-center">
+            <b class="ms-1 me-4">Left</b>
+            <mat-slider style="width: calc(100% / 6 * 5)" min="-1" max="1" step="0.01" (input)="mediaService.onStereoChange($event)">
+              <input matSliderThumb [(ngModel)]="mediaService.position" />
+            </mat-slider>
+            <b class="ms-4">Right</b>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #alarmDialog>
+  <div class="" mat-dialog-title>{{ mediaService.onTimeout() ? "You're in timer " : 'Stop after ' }}<input type="text" style="opacity: 0" /></div>
+  <ng-template #onTimeout>
+    <div class="div" mat-dialog-content>
+      <p>
+        Time left: <b style="color: var(--text-normal-color)">{{ countdownView() | durationConverter }}</b>
+      </p>
+      <div class="flex content-end">
+        <button mat-raised-button color="primary" (click)="clearTimer()">Terminate timer</button>
+      </div>
+    </div>
+  </ng-template>
+  <ng-container *ngIf="!mediaService.onTimeout(); else onTimeout">
+    <form mat-dialog-content #formAlarmRef="ngForm" (ngSubmit)="setStopAfter(formAlarmRef)" [formGroup]="alarmForm">
+      <div class="row pt-3">
+        <div class="col-6">
+          <mat-form-field>
+            <mat-label>Hour</mat-label>
+            <input type="text" placeholder="Pick one" aria-label="Number" matInput formControlName="hourControl" />
+            <mat-error *ngIf="alarmForm.controls.hourControl.hasError('pattern')">Must be number</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+          <mat-form-field>
+            <mat-label>Minute</mat-label>
+            <input type="text" placeholder="Pick one" aria-label="Number" matInput formControlName="minuteControl" [matAutocomplete]="auto" />
+            <mat-error *ngIf="alarmForm.controls.minuteControl.hasError('required')">Required</mat-error>
+            <mat-error *ngIf="alarmForm.controls.minuteControl.hasError('pattern')">Must be number</mat-error>
+            <mat-error *ngIf="alarmForm.controls.minuteControl.hasError('minute')">{{ alarmForm.controls.minuteControl.getError('minute') }}</mat-error>
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{ option }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="flex content-end mt-4">
+        <button mat-stroked-button mat-dialog-close (click)="formAlarmRef.resetForm(); checkAlarm()">Close</button>
+        <button mat-stroked-button [color]="alarmForm.touched && alarmForm.invalid ? 'warn' : 'primary'" class="ms-3" type="submit">Save</button>
+      </div>
+    </form>
+  </ng-container>
+</ng-template>
+
+<ng-template #editDialogRef>
+  <edit-dialog [mode]="mode"></edit-dialog>
+</ng-template>
