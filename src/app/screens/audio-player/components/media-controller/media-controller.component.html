@@ -24,7 +24,7 @@
     <div class="w-50 mpt" [class.invalid-audio]="!mediaService.currentSongPlaying">
       <div class="w-100 content-center flex align-center position-relative">
         <div class="alarm-off flex align-center">
-          <button mat-icon-button (click)="showAlarm()" [color]="mediaService.onTimeout() ? 'primary' : ''">
+          <button mat-icon-button (click)="showAlarm()" [color]="$any(mediaService.onTimeout() ? 'primary' : '')">
             <mat-icon>{{ mediaService.onTimeout() ? 'alarm_on' : 'alarm' }}</mat-icon>
           </button>
           <span *ngIf="mediaService.onTimeout()" class="time-left">{{ countdownView() | durationConverter }}</span>
