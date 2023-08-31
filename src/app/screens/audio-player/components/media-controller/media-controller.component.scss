@@ -38,14 +38,13 @@
 
 .destination {
   position: absolute;
-  top: calc(100% - 1rem);
+  bottom: calc(100% + 1px);
   right: 1rem;
-  height: 1rem;
-  background: #fff;
+  height: 2rem;
   overflow-x: hidden;
   z-index: 999;
-  width: calc(100% / 3 - 2rem - 16px);
-  background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 14%, rgba(255, 255, 255, 0) 100%);
+  width: calc(100%);
+  background: linear-gradient(0deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 14%, rgba(255, 255, 255, 0) 100%);
 }
 
 .sname {
