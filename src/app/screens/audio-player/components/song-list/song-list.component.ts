@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SongProps } from '@app-types/common.types';
@@ -14,7 +14,7 @@ import { getFromLocal, setToLocal } from '@shared/helper';
     class: 'current-list',
   },
 })
-export class SongListComponent implements OnInit {
+export class SongListComponent implements OnInit, OnDestroy {
   @ViewChild('dialogRef') dialogRef!: TemplateRef<any>;
   @ViewChild('editDialogRef') editDialogRef!: TemplateRef<any>;
   @ViewChild('snackbarRef') snackbarRef!: TemplateRef<any>;
@@ -26,7 +26,6 @@ export class SongListComponent implements OnInit {
   mediaService = inject(AudioPlayerService);
   cmS = inject(CommonService);
   dialog = inject(MatDialog);
-  #snackBar = inject(MatSnackBar);
 
   ngOnInit() {
     this.getList();

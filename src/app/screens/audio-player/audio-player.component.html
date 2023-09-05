@@ -22,14 +22,14 @@
     <div class="main-body flex">
       <div class="w_25bm">
         <div class="px-4 pt-4 flex flex-column align-center">
-          <ng-template #noAvatar> img </ng-template>
+          <ng-template #noAvatar> no avatar</ng-template>
           <img
             class="aus-avatar"
             [ngClass]="{
               'w-100 playing-disk': (service.currentSongPlaying?.avatar || '').length <= 0,
               'paused-disk': !service.state(),
             }"
-            [src]="(service.currentSongPlaying?.avatar || '').length > 0 ? service.currentSongPlaying?.avatar : 'assets/images/not-avatar.png'"
+            [src]="service.currentSongPlaying ? service.currentSongPlaying.avatar : 'assets/images/not-avatar.png'"
             alt=""
           />
         </div>

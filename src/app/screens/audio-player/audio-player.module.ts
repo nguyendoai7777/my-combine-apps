@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { AudioPlayerComponent } from './audio-player.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -44,6 +44,7 @@ import { EditDialogComponent } from './components/edit-dialog/edit-dialog.compon
         component: AudioPlayerComponent,
       },
     ]),
+    NgOptimizedImage,
   ],
 })
 export class AudioPlayerModule {}

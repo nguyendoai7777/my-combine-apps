@@ -33,11 +33,17 @@ export class AudioPlayerService {
   onTimeout = signal(false);
   dialog = inject(MatDialog);
   cms = inject(CommonService);
-  latestPlayedId = getFromLocal('id');
   constructor() {
     this.audio.crossOrigin = 'anonymous';
     this.setAudioLoop();
     this.track = this.audioCtx.createMediaElementSource(this.audio);
+
+    this.cms.justAdd$.subscribe(() => {
+      this.currentSongPlaying && (this.audio.src = getFromLocal<SongProps>('lastSongPlayed', 'null').url);
+    });
+    this.audio.addEventListener('error', () => {
+      throw new Error('Cannot play this');
+    });
     if (this.currentSongPlaying) {
       this.audioEventHandleGroup();
       this.audio.onended = () => {
@@ -84,12 +90,17 @@ export class AudioPlayerService {
     this.cms.justAdd.next(null);
     this.audio.src = s.url;
     this.audio.currentTime = 0;
-    this.state.set(true);
-    if (this.audioCtx.state === 'suspended') {
-      void this.audioCtx.resume();
-      this.audioEventHandleGroup();
-    }
-    void this.audio.play();
+    this.audio.addEventListener('error', () => {
+      throw new Error('Cannot play this song');
+    });
+    this.audio.addEventListener('canplay', () => {
+      this.state.set(true);
+      if (this.audioCtx.state === 'suspended') {
+        void this.audioCtx.resume();
+        this.audioEventHandleGroup();
+      }
+      void this.audio.play();
+    });
   }
 
   playOrPause(): void {
@@ -240,10 +251,6 @@ export class AudioPlayerService {
   clearAlarm() {
     this.alarm && clearTimeout(this.alarm as number);
     this.onTimeout.set(false);
-  }
-
-  lastPlayedSong() {
-    return getFromLocal<SongProps>('lastSongPlayed', 'null');
   }
 
   openDialogEdit(templateRef: TemplateRef<unknown>, callback?: () => void) {

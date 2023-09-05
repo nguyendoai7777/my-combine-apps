@@ -1,23 +1,23 @@
-import { Component, ElementRef, EventEmitter, inject, Input, OnChanges, Output, signal, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, signal, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroupDirective, Validators } from '@angular/forms';
 import { Mode, SongProps } from '@app-types/common.types';
 import { CommonService } from '@services/common.service';
 import { getFromLocal, setToLocal } from '@shared/helper';
 import { MatDialog } from '@angular/material/dialog';
+import { AudioPlayerService } from '@scr/audio-player/audio-player.service';
 
 @Component({
   selector: 'add-song',
   templateUrl: './add-song.component.html',
   styleUrls: ['./add-song.component.scss'],
 })
-export class AddSongComponent implements OnChanges {
+export class AddSongComponent implements OnChanges, OnInit {
   @ViewChild('formCpn') formCpn!: ElementRef<HTMLInputElement>;
   @ViewChild('addForm') formRef!: FormGroupDirective;
 
   @Input() remote = false;
   @Input() mode: Mode = 'new';
   @Input() currentEdit?: SongProps | null;
-  @Output() saveEdite = new EventEmitter<void>();
   @Output() formChange = new EventEmitter<FormGroupDirective>();
   currentSongOnEdit?: SongProps | null;
   // DI
@@ -79,17 +79,23 @@ export class AddSongComponent implements OnChanges {
           findItem.url = url;
           findItem.avatar = avatar;
           findItem.lyrics = lyrics;
+          const newInfo = {
+            name: name,
+            url: url,
+            avatar: avatar,
+            lyrics: lyrics,
+          };
+          setToLocal('lastSongPlayed', newInfo);
+          setToLocal('songList', currentList);
         }
-        setToLocal('songList', currentList);
-        setToLocal('lastSongPlayed', findItem);
+
         this.cmS.justAdd.next(null);
       }
-
       this.dialog.closeAll();
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     if (this.currentEdit) {
       this.currentSongOnEdit = this.currentEdit;
       const { url, name, avatar, lyrics } = this.currentEdit;

@@ -15,13 +15,11 @@ import { getFromLocal } from '@shared/helper';
   styleUrls: ['./media-controller.component.scss'],
   providers: [DurationConverterPipe],
 })
-export class MediaControllerComponent implements OnInit, AfterViewInit, OnDestroy {
+export class MediaControllerComponent implements OnInit, OnDestroy {
   @ViewChild('alarmDialog') alarmDialog!: TemplateRef<unknown>;
   @ViewChild('formAlarmRef') formAlarmRef!: FormGroupDirective;
   @ViewChild('audioRef', { static: true }) audioRef!: ElementRef<HTMLAudioElement>;
   currentSongSelected?: SongProps | null;
-
-  durationConverter = inject(DurationConverterPipe);
   mediaService = inject(AudioPlayerService);
   cms = inject(CommonService);
   dialog = inject(MatDialog);
@@ -48,7 +46,6 @@ export class MediaControllerComponent implements OnInit, AfterViewInit, OnDestro
       this.getList();
     });
     window.addEventListener('keyup', (e) => {
-      console.log(e);
       if (e.code === 'Space') {
         this.mediaService.playOrPause();
       }
@@ -97,20 +94,13 @@ export class MediaControllerComponent implements OnInit, AfterViewInit, OnDestro
   showAlarm() {
     const alarm = this.dialog.open(this.alarmDialog, {});
     alarm.afterClosed().subscribe(() => {
-      this.formAlarmRef.resetForm();
+      this.formAlarmRef?.resetForm();
     });
-    this.audioRef.nativeElement.play();
-  }
-
-  ngAfterViewInit() {
-    this.audioRef.nativeElement.src = ``;
   }
 
   ngOnDestroy() {}
 
-  checkAlarm() {
-    console.log(this.mediaService.alarm);
-  }
+  checkAlarm() {}
 
   clearTimer() {
     clearInterval(this.countdownInterval!);
