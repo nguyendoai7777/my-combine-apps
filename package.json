@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "pl2": "npm run build && gh-pages -d dist",
+    "pl": "gh-pages -d dist",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "prepare": "husky install"
@@ -30,6 +32,7 @@
     "@angular/cli": "~16.2.0",
     "@angular/compiler-cli": "^16.2.0",
     "@types/jasmine": "~4.3.0",
+    "gh-pages": "^6.0.0",
     "husky": "^8.0.0",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
