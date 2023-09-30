@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --base-href /my-combine-apps/",
     "pl2": "npm run build && gh-pages -d dist",
     "pl": "gh-pages -d dist",
     "watch": "ng build --watch --configuration development",

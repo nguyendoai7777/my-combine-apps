@@ -13,17 +13,18 @@ import { A11yModule } from '@angular/cdk/a11y';
   declarations: [ImageSplitterComponent, DropFileDirective],
   imports: [
     CommonModule,
+
+    MatButtonModule,
+    MatRippleModule,
+    MatIconModule,
+    MatMenuModule,
+    A11yModule,
     RouterModule.forChild([
       {
         path: '',
         component: ImageSplitterComponent,
       },
     ]),
-    MatButtonModule,
-    MatRippleModule,
-    MatIconModule,
-    MatMenuModule,
-    A11yModule,
   ],
 })
 export class ImageSplitterModule {}
